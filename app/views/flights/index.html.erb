@@ -1,0 +1,41 @@
+<%= form_tag(flights_path, method: :get) do %>
+  <p>Departing from:</p>
+  <%= select_tag(:from_airport, options_for_select(@airport_options)) %>
+
+  <p>Arriving at:</p>
+  <%= select_tag(:to_airport, options_for_select(@airport_options, selected: "LAX - Los Angeles International Airport")) %>
+
+  <p>Number of passengers:</p>
+  <%= select_tag(:num_passengers, options_for_select([[1], [2], [3], [4]])) %>
+
+  <p>Date:</p>
+  <%= select_tag(:date, options_for_select(@date_options)) %>
+  <br><br>
+  
+  <%= submit_tag "Search flights" %><br><br>
+
+<% end %>
+
+<%# form_for @booking, url: {action: "new"} do |f| %>
+  <table>
+    <tr>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Departing</th>
+      <th>Flight Duration</th>
+      <th>Price</th>
+      <th>Select this Flight</th>
+    </tr>
+
+    <% @flights.each do |flight| %>
+    <tr>
+      <td><%= flight.from_airport.code %></td> 
+      <td><%= flight.to_airport.code %></td>
+      <td><%= flight.departure.strftime("%m/%d/%y") %></td>
+      <td><%= flight.duration %></td>
+      <td>$<%= flight.price %></td>
+      <td><%=  %></td>
+    </tr>
+    <% end %>
+
+<%# end %>

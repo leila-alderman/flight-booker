@@ -20,7 +20,7 @@ perms.each do |perm|
     10.times do |n|
         Flight.create(from_airport: Airport.find(perm[0]), 
             to_airport: Airport.find(perm[1]),
-            departure: Time.now + n.days, 
+            departure: Date.today + n.days, 
             duration: "#{1 + rand(9)} hours #{1 + rand(59)} minutes",
             price: 150 + rand(1000))
     end
