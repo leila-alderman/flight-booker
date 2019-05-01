@@ -16,26 +16,24 @@
 
 <% end %>
 
-<%# form_for @booking, url: {action: "new"} do |f| %>
-  <table>
-    <tr>
-      <th>Origin</th>
-      <th>Destination</th>
-      <th>Departing</th>
-      <th>Flight Duration</th>
-      <th>Price</th>
-      <th>Select this Flight</th>
-    </tr>
+<table>
+  <tr>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Departing</th>
+    <th>Flight Duration</th>
+    <th>Price</th>
+    <th>   </th>
+  </tr>
 
-    <% @flights.each do |flight| %>
-    <tr>
-      <td><%= flight.from_airport.code %></td> 
-      <td><%= flight.to_airport.code %></td>
-      <td><%= flight.departure.strftime("%m/%d/%y") %></td>
-      <td><%= flight.duration %></td>
-      <td>$<%= flight.price %></td>
-      <td><%=  %></td>
-    </tr>
-    <% end %>
-
-<%# end %>
+  <% @flights.each do |flight| %>
+  <tr>
+    <td><%= flight.from_airport.code %></td> 
+    <td><%= flight.to_airport.code %></td>
+    <td><%= flight.departure.strftime("%m/%d/%y") %></td>
+    <td><%= flight.duration %></td>
+    <td>$<%= flight.price %></td>
+    <td><%= link_to "Purchase Flight", new_flight_booking_path(flight, num_passengers: params[:num_passengers]) %></td>
+  </tr>
+  <% end %>
+</table>
