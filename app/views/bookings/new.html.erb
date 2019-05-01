@@ -1,0 +1,33 @@
+<h2>Purchase selected flight</h2>
+
+<table>
+  <tr>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Departing</th>
+    <th>Flight Duration</th>
+    <th>Price</th>
+    <th>Number of Passengers</th>
+    <th>Total Cost</th>
+  </tr>
+
+  <tr>
+    <td><%= @flight.from_airport.code %></td> 
+    <td><%= @flight.to_airport.code %></td>
+    <td><%= @flight.departure.strftime("%m/%d/%y") %></td>
+    <td><%= @flight.duration %></td>
+    <td>$<%= @flight.price %></td>
+    <td><%= @num_passengers %>
+    <td>$<%= @flight.price * @num_passengers %>
+  </tr>
+</table><br><br>
+
+<%= form_for [@flight, @booking] do |f| %>
+  <% @num_passengers.times do |i| %>
+    <%= "Passenger #{i+1}:" %>
+    <%# f.label :name %>
+    <%# f.text_field :name %><br>
+    <%# f.label :email %>
+    <%# f.text_field :email %><br>
+  <% end %>
+<% end %>
