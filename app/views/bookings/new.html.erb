@@ -18,11 +18,11 @@
     <td><%= @flight.duration %></td>
     <td>$<%= @flight.price %></td>
     <td><%= @num_passengers %>
-    <td>$<%= @flight.price * @num_passengers %>
+    <td>$<%= @total %>
   </tr>
 </table><br><br>
 
-<%= form_for [@flight, @booking] do |f| %>
+<%= form_for [@flight, @booking], html: { id: "payment-form" }  do |f| %>
   <% @num_passengers.times do |i| %>
     <%= "Passenger #{i+1}:" %>
     <%# f.label :name %>
@@ -30,4 +30,39 @@
     <%# f.label :email %>
     <%# f.text_field :email %><br>
   <% end %>
+  <% f.hidden_field :payment_method_token %>
+  <% f.hidden_field :total_price, value: @total %>
+  <%= f.submit "Checkout", onclick: "SpreedlyExpress.openView();" %>
 <% end %>
+
+
+
+<form id="payment-form" action="/flights/<%= @flight.id %>/bookings/new">
+  <input type="hidden" name="payment_method_token" id="payment_method_token">
+  <input type="button" value="Checkout v1" onclick="SpreedlyExpress.openView();">
+</form>
+
+<%# Load Spreedly Express %>
+<script src="https://core.spreedly.com/iframe/express-2.min.js"></script>
+
+<script>
+// Initialize Spreedly Express with total cost
+SpreedlyExpress.init("ZsZlG3TIExW3qlEs5lOVIj4mEyN", {
+  // Additional quotation marks are needed for this to resolve as a string
+  "amount": "<%= "$#{@total}" %>",
+  "company_name": "Spreedly Airlines"
+});
+
+
+// Create a callback function that sends the payment method token to company servers
+SpreedlyExpress.onPaymentMethod(function(token, paymentMethod) {
+
+  // Send requisite payment method info to backend
+  var tokenField = document.getElementById("payment_method_token");
+
+  tokenField.setAttribute("value", token);
+
+  var masterForm = document.getElementById('payment-form');
+  masterForm.submit();
+});
+</script>
