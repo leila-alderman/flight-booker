@@ -18,11 +18,11 @@
     <td><%= @flight.duration %></td>
     <td>$<%= @flight.price %></td>
     <td><%= @num_passengers %>
-    <td>$<%= @total %>
+    <td>$<%= @total_price %>
   </tr>
 </table><br><br>
 
-<%= form_for [@flight, @booking], html: { id: "payment-form" }  do |f| %>
+<%= form_for [@flight, @booking] do |f| %>
   <% @num_passengers.times do |i| %>
     <%= "Passenger #{i+1}:" %>
     <%# f.label :name %>
@@ -30,26 +30,20 @@
     <%# f.label :email %>
     <%# f.text_field :email %><br>
   <% end %>
-  <% f.hidden_field :payment_method_token %>
-  <% f.hidden_field :total_price, value: @total %>
-  <%= f.submit "Checkout", onclick: "SpreedlyExpress.openView();" %>
-<% end %>
+<% end %><br>
 
-
-
-<form id="payment-form" action="/flights/<%= @flight.id %>/bookings/new">
+<form action="/flights/<%= @flight.id %>/bookings/new" id="payment-form">
   <input type="hidden" name="payment_method_token" id="payment_method_token">
-  <input type="button" value="Checkout v1" onclick="SpreedlyExpress.openView();">
+  <%# Add hidden field to pass num_passengers variable to next screen %>
+  <input type="hidden" name="num_passengers" value= <%= @num_passengers %>>
+  <input type="button" value="Checkout" onclick="SpreedlyExpress.openView();">
 </form>
-
-<%# Load Spreedly Express %>
-<script src="https://core.spreedly.com/iframe/express-2.min.js"></script>
 
 <script>
 // Initialize Spreedly Express with total cost
 SpreedlyExpress.init("ZsZlG3TIExW3qlEs5lOVIj4mEyN", {
   // Additional quotation marks are needed for this to resolve as a string
-  "amount": "<%= "$#{@total}" %>",
+  "amount": "<%= "$#{@total_price}" %>",
   "company_name": "Spreedly Airlines"
 });
 

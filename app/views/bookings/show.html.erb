@@ -1,1 +1,16 @@
 <h2>Your flight booking</h2>
+
+
+<table>
+  <tr>
+    <th>Number of Passengers</th>
+    <th>Total Cost</th>
+    <th>Payment method token</th>
+  </tr>
+
+  <tr>
+    <td><%= @booking.num_passengers %>
+    <td>$<%= @booking.total_price %>
+    <td><%= @booking.payment_method_token %>
+  </tr>
+</table><br><br>
