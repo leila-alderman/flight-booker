@@ -1,0 +1,18 @@
+<h2>All Flight Transactions</h2>
+
+<table>
+  <tr>
+    <th>Transaction Time</th>
+    <th>Card Retained?</th>
+    <th>Transaction Message</th>
+  </tr>
+
+  <% @transactions.each do |transaction| %>
+  <tr>
+    <td><%= transaction.created_at.strftime("%m/%d/%y") %></td> 
+    <td><%= false %></td>
+    <td><%= transaction.message %></td>
+  </tr>
+
+<% end %>
+</table>
