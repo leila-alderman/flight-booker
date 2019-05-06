@@ -35,6 +35,9 @@ gem 'jbuilder', '~> 2.5'
 # Add pry gem
 gem 'pry', '~> 0.10.3'
 
+# Add Spreedly gem to improve API integrations
+gem 'spreedly', '~> 2.0', '>= 2.0.16'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
