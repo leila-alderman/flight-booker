@@ -34,8 +34,14 @@
 
 <form action="/flights/<%= @flight.id %>/bookings/new" id="payment-form">
   <input type="hidden" name="payment_method_token" id="payment_method_token">
+  
   <%# Add hidden field to pass num_passengers variable to next screen %>
   <input type="hidden" name="num_passengers" value= <%= @num_passengers %>>
+
+  <input type="checkbox" name="save_card" value="true" checked> Save card for future purchases?<br>
+
+  <input type="checkbox" name="expedia" value="true"> Use Expedia for checkout?<br><br>
+  
   <input type="button" value="Checkout" onclick="SpreedlyExpress.openView();">
 </form>
 
