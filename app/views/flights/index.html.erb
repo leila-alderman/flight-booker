@@ -33,7 +33,7 @@
     <td><%= flight.departure.strftime("%m/%d/%y") %></td>
     <td><%= flight.duration %></td>
     <td>$<%= flight.price %></td>
-    <td><%= link_to "Purchase Flight", new_flight_booking_path(flight, num_passengers: params[:num_passengers]) %></td>
+    <td><%= link_to "Purchase Flight", new_flight_booking_path(flight, num_passengers: (params[:num_passengers] || 1) ) %></td>
   </tr>
   <% end %>
 </table>
