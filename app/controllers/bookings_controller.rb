@@ -2,6 +2,18 @@ class BookingsController < ApplicationController
 
   def index
     @bookings = Booking.all
+
+    # Set up the Spreedly enviornment using the environment key and access secret
+    env = Spreedly::Environment.new(ENV["ENV_KEY"], ENV["ACCESS_SECRET"])
+
+    # Retrieve the first 20 transactions (paginated resource)
+    transactions = env.list_transactions
+    # If the next page of resources exists
+    until env.list_transactions(transactions.last.token).empty?
+      next_set = env.list_transactions(transactions.last.token)
+      transactions += next_set
+    end
+    @transactions = transactions
   end
   
   def show
@@ -66,9 +78,9 @@ class BookingsController < ApplicationController
         @booking.transaction_token = transaction.token
         @booking.save
         flash[:success] = "Payment successful!"
-        # redirect_to flight_booking_path(@flight, @booking)
+        redirect_to flight_booking_path(@flight, @booking)
       else
-        flash[:danger] = "Payment failed. Please try again."
+        flash[:danger] = "Payment failed. Please try again./n #{transaction.message}"
         redirect_to new_flight_booking_path(@flight, num_passengers: @num_passengers)
       end
     end

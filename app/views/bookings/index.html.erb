@@ -3,14 +3,20 @@
 <table>
   <tr>
     <th>Transaction Time</th>
-    <th>Card Retained?</th>
+    <th>Transaction Token</th>
+    <th>Last Four Digits of Card<th>
     <th>Transaction Message</th>
   </tr>
 
   <% @transactions.each do |transaction| %>
   <tr>
-    <td><%= transaction.created_at.strftime("%m/%d/%y") %></td> 
-    <td><%= false %></td>
+    <td><%= transaction.created_at.strftime("%b %e, %Y at %l:%M %P") %></td>
+    <td><%= transaction.token %></td>
+    <% if transaction.class == Spreedly::AddPaymentMethod %>
+      <td><%= transaction.payment_method.last_four_digits %>
+    <% else %>
+      <td>not retained</td>
+    <% end %>
     <td><%= transaction.message %></td>
   </tr>
 
