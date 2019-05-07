@@ -1,8 +1,6 @@
 class BookingsController < ApplicationController
 
   def index
-    @bookings = Booking.all
-
     # Set up the Spreedly enviornment using the environment key and access secret
     env = Spreedly::Environment.new(ENV["ENV_KEY"], ENV["ACCESS_SECRET"])
 

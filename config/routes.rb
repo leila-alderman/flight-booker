@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :flights do
     resources :bookings
   end
+  get 'transactions', to: 'bookings#index', as: :transactions
 end
